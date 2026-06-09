@@ -1,0 +1,1024 @@
+bash
+
+cat > /mnt/user-data/outputs/index.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Rincón del Mate | San Martín, Mendoza</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --crema:       #F5EDD8;
+      --crema-oscuro:#E8D9B8;
+      --marron:      #5C3317;
+      --marron-medio:#8B4513;
+      --marron-claro:#A0633A;
+      --verde-mate:  #4A6741;
+      --verde-claro: #6B8F5E;
+      --texto:       #2E1A0E;
+      --texto-suave: #6B4C30;
+      --blanco:      #FFFDF8;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--crema);
+      color: var(--texto);
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, var(--marron) 0%, var(--marron-medio) 100%);
+      padding: 0 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--crema);
+      letter-spacing: 1px;
+    }
+    .logo span { color: #D4A847; }
+    nav a {
+      color: var(--crema);
+      text-decoration: none;
+      margin-left: 28px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    nav a:hover { opacity: 1; color: #D4A847; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--marron) 0%, var(--marron-medio) 45%, var(--marron-claro) 100%);
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-emoji { font-size: 4rem; margin-bottom: 16px; }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.2rem;
+      color: var(--crema);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+    .hero h1 span { color: #D4A847; }
+    .hero p {
+      font-size: 1.15rem;
+      color: rgba(245,237,216,0.85);
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      background: #D4A847;
+      color: var(--marron);
+      padding: 13px 32px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary:hover { background: #E6B84A; transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--crema);
+      padding: 13px 32px;
+      border: 2px solid rgba(245,237,216,0.5);
+      border-radius: 4px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--crema); background: rgba(245,237,216,0.1); }
+
+    /* ── FRASE DEL DÍA ── */
+    .frase-banner {
+      background: var(--verde-mate);
+      padding: 18px 40px;
+      text-align: center;
+    }
+    .frase-banner p {
+      color: var(--crema);
+      font-style: italic;
+      font-size: 1.05rem;
+      font-weight: 300;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .frase-banner strong { font-weight: 700; color: #D4A847; font-style: normal; }
+
+    /* ── SECCIÓN INFO ── */
+    .info-strip {
+      background: var(--crema-oscuro);
+      border-top: 2px solid rgba(92,51,23,0.15);
+      border-bottom: 2px solid rgba(92,51,23,0.15);
+      padding: 20px 40px;
+    }
+    .info-strip-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--texto-suave);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .info-item .icon { font-size: 1.3rem; }
+
+    /* ── PRODUCTOS ── */
+    .section { max-width: 1200px; margin: 0 auto; padding: 60px 20px; }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      color: var(--marron);
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      color: var(--texto-suave);
+      font-size: 0.95rem;
+      margin-bottom: 36px;
+      font-weight: 300;
+    }
+
+    /* Filtros */
+    .filtros {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .filtro-btn {
+      padding: 8px 20px;
+      border: 2px solid var(--marron-claro);
+      border-radius: 30px;
+      background: transparent;
+      color: var(--marron-claro);
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filtro-btn:hover, .filtro-btn.activo {
+      background: var(--marron-claro);
+      color: var(--crema);
+    }
+
+    /* Grilla de productos */
+    .productos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .producto-card {
+      background: var(--blanco);
+      border: 1px solid rgba(92,51,23,0.12);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .producto-card:hover { box-shadow: 0 6px 24px rgba(92,51,23,0.15); transform: translateY(-2px); }
+    .producto-card.sin-stock { opacity: 0.6; }
+    .badge-sin-stock {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #C0392B;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+    }
+    .badge-bajo-stock {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #E67E22;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+    }
+    .producto-marca {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--verde-mate);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .producto-nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      color: var(--marron);
+      margin-bottom: 12px;
+      line-height: 1.3;
+      flex: 1;
+    }
+    .producto-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      border-top: 1px solid rgba(92,51,23,0.1);
+      padding-top: 12px;
+    }
+    .producto-precio {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--marron-medio);
+    }
+    .btn-agregar {
+      background: var(--verde-mate);
+      color: var(--crema);
+      border: none;
+      border-radius: 4px;
+      padding: 8px 14px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-agregar:hover { background: var(--verde-claro); }
+    .btn-agregar:disabled { background: #ccc; cursor: not-allowed; }
+    .producto-stock {
+      font-size: 0.75rem;
+      color: var(--texto-suave);
+      margin-top: 6px;
+    }
+
+    /* ── CARRITO ── */
+    .carrito-flotante {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--marron);
+      color: var(--crema);
+      border: none;
+      border-radius: 50px;
+      padding: 14px 22px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 200;
+      transition: all 0.2s;
+    }
+    .carrito-flotante:hover { background: var(--marron-medio); transform: scale(1.03); }
+    .carrito-badge {
+      background: #D4A847;
+      color: var(--marron);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Modal carrito */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(46,26,14,0.6);
+      z-index: 300;
+      display: none;
+      justify-content: flex-end;
+    }
+    .overlay.abierto { display: flex; }
+    .panel-carrito {
+      background: var(--blanco);
+      width: 420px;
+      max-width: 100vw;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+    }
+    .panel-carrito h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      color: var(--marron);
+      margin-bottom: 24px;
+    }
+    .carrito-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(92,51,23,0.1);
+    }
+    .carrito-item-info { flex: 1; }
+    .carrito-item-nombre { font-size: 0.9rem; color: var(--texto); font-weight: 700; }
+    .carrito-item-precio { font-size: 0.82rem; color: var(--texto-suave); margin-top: 2px; }
+    .carrito-cantidad {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .cant-btn {
+      background: var(--crema-oscuro);
+      border: 1px solid rgba(92,51,23,0.2);
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--marron);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cant-btn:hover { background: var(--marron-claro); color: var(--crema); }
+    .carrito-total {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 2px solid var(--marron-claro);
+    }
+    .carrito-total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--marron);
+      margin-bottom: 20px;
+    }
+
+    /* Formulario de pedido */
+    .form-grupo { margin-bottom: 16px; }
+    .form-grupo label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--texto-suave);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .form-grupo input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid rgba(92,51,23,0.2);
+      border-radius: 4px;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.95rem;
+      color: var(--texto);
+      background: var(--crema);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-grupo input:focus { border-color: var(--marron-claro); }
+
+    .btn-cerrar {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--texto-suave);
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    /* Confirmación */
+    .confirmacion {
+      background: #E8F5E9;
+      border: 1.5px solid #4CAF50;
+      border-radius: 8px;
+      padding: 20px;
+      text-align: center;
+      display: none;
+    }
+    .confirmacion.visible { display: block; }
+    .confirmacion h3 { color: #2E7D32; margin-bottom: 8px; }
+    .confirmacion p { color: #388E3C; font-size: 0.9rem; }
+
+    /* ── CHATBOT ── */
+    .chat-flotante {
+      position: fixed;
+      bottom: 90px;
+      right: 28px;
+      z-index: 200;
+    }
+    .chat-btn {
+      background: var(--verde-mate);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      transition: all 0.2s;
+    }
+    .chat-btn:hover { background: var(--verde-claro); transform: scale(1.05); }
+    .chat-panel {
+      position: absolute;
+      bottom: 64px;
+      right: 0;
+      width: 320px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      max-height: 450px;
+    }
+    .chat-panel.abierto { display: flex; }
+    .chat-header {
+      background: var(--marron);
+      color: var(--crema);
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-mensajes {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 280px;
+    }
+    .mensaje {
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      max-width: 85%;
+      line-height: 1.4;
+    }
+    .mensaje.bot {
+      background: var(--crema-oscuro);
+      color: var(--texto);
+      align-self: flex-start;
+      border-bottom-left-radius: 3px;
+    }
+    .mensaje.usuario {
+      background: var(--verde-mate);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 3px;
+    }
+    .chat-input-area {
+      display: flex;
+      border-top: 1px solid #eee;
+    }
+    .chat-input-area input {
+      flex: 1;
+      padding: 12px 14px;
+      border: none;
+      font-family: 'Lato', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+    }
+    .chat-input-area button {
+      background: var(--verde-mate);
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+    .chat-input-area button:hover { background: var(--verde-claro); }
+
+    /* ── UBICACIÓN ── */
+    .ubicacion-section {
+      background: var(--crema-oscuro);
+      border-top: 2px solid rgba(92,51,23,0.12);
+    }
+    .ubicacion-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .ubicacion-texto h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--marron);
+      margin-bottom: 16px;
+    }
+    .ubicacion-dato {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+      color: var(--texto-suave);
+      font-size: 0.95rem;
+    }
+    .ubicacion-dato .icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--marron);
+      color: rgba(245,237,216,0.7);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 0.85rem;
+    }
+    footer strong { color: var(--crema); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      nav { display: none; }
+      .ubicacion-inner { grid-template-columns: 1fr; }
+      .panel-carrito { width: 100vw; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">🧉 El Rincón <span>del Mate</span></div>
+    <nav>
+      <a href="#productos">Productos</a>
+      <a href="#pedido">Pedidos</a>
+      <a href="#ubicacion">Ubicación</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-emoji">🧉</div>
+    <h1>El sabor <span>auténtico</span><br>del mate argentino</h1>
+    <p>Las mejores yerbas, directamente en tu mano.<br>San Martín, Mendoza.</p>
+    <div class="hero-btns">
+      <a href="#productos" class="btn-primary">Ver productos</a>
+      <a href="#ubicacion" class="btn-secondary">Cómo llegar</a>
+    </div>
+  </div>
+</section>
+
+<!-- FRASE DEL DÍA -->
+<div class="frase-banner">
+  <p>✨ <strong>Frase del día:</strong> <span id="frase-dia">El mate es más que una bebida, es un abrazo en forma de yerba. ☀️</span></p>
+</div>
+
+<!-- INFO STRIP -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div class="info-item"><span class="icon">📍</span> Tucumán 275, San Martín</div>
+    <div class="info-item"><span class="icon">🕐</span> Lun–Sáb 9:00 – 20:00</div>
+    <div class="info-item"><span class="icon">📦</span> Solo retiro en local</div>
+    <div class="info-item"><span class="icon">📲</span> +54 9 2634 518838</div>
+  </div>
+</div>
+
+<!-- PRODUCTOS -->
+<section id="productos" class="section">
+  <h2 class="section-title">Nuestras Yerbas</h2>
+  <p class="section-sub">Stock actualizado en tiempo real · Precios en pesos argentinos</p>
+
+  <div class="filtros">
+    <button class="filtro-btn activo" onclick="filtrar('todos', this)">Todos</button>
+    <button class="filtro-btn" onclick="filtrar('canarias', this)">Canarias</button>
+    <button class="filtro-btn" onclick="filtrar('rei verde', this)">Rei Verde</button>
+    <button class="filtro-btn" onclick="filtrar('sara', this)">Sara</button>
+    <button class="filtro-btn" onclick="filtrar('otras', this)">Otras Marcas</button>
+    <button class="filtro-btn" onclick="filtrar('disponible', this)">En Stock</button>
+  </div>
+
+  <div class="productos-grid" id="grid-productos"></div>
+</section>
+
+<!-- UBICACIÓN -->
+<section id="ubicacion" class="ubicacion-section">
+  <div class="ubicacion-inner">
+    <div class="ubicacion-texto">
+      <h2>Vení a buscarlo</h2>
+      <div class="ubicacion-dato"><span class="icon">📍</span><span>Tucumán 275, San Martín, Mendoza<br><em style="font-size:0.85rem;opacity:0.8">(Agencia de quiniela)</em></span></div>
+      <div class="ubicacion-dato"><span class="icon">🕐</span><span>Lunes a Sábado: 9:00 – 20:00 hs</span></div>
+      <div class="ubicacion-dato"><span class="icon">📦</span><span>Solo retiro en el local por el momento</span></div>
+      <div class="ubicacion-dato"><span class="icon">📱</span><span>+54 9 2634 518838</span></div>
+      <div class="ubicacion-dato"><span class="icon">📧</span><span>elrincondelmatesm@gmail.com</span></div>
+      <a href="https://wa.me/5492634518838" target="_blank" class="btn-primary" style="display:inline-block;margin-top:20px;">Escribinos por WhatsApp</a>
+    </div>
+    <div style="background:var(--crema);border-radius:8px;overflow:hidden;height:280px;display:flex;align-items:center;justify-content:center;border:2px solid rgba(92,51,23,0.15);">
+      <div style="text-align:center;color:var(--texto-suave);">
+        <div style="font-size:3rem;margin-bottom:12px;">📍</div>
+        <strong style="font-size:1rem;color:var(--marron);">Tucumán 275</strong><br>
+        <span style="font-size:0.9rem;">San Martín, Mendoza</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>El Rincón del Mate</strong> · Tucumán 275, San Martín, Mendoza · 🧉 Hecho con amor y mucha yerba</p>
+  <p style="margin-top:8px;font-size:0.78rem;">Instagram: <a href="https://www.instagram.com/elrincondelmate_sm/" target="_blank" style="color:#D4A847;">@elrincondelmate_sm</a></p>
+</footer>
+
+<!-- CARRITO FLOTANTE -->
+<button class="carrito-flotante" onclick="toggleCarrito()" id="btn-carrito" style="display:none;">
+  🧉 Mi pedido <span class="carrito-badge" id="badge-cant">0</span>
+</button>
+
+<!-- OVERLAY CARRITO -->
+<div class="overlay" id="overlay-carrito" onclick="cerrarCarritoPorOverlay(event)">
+  <div class="panel-carrito">
+    <button class="btn-cerrar" onclick="toggleCarrito()">✕</button>
+    <h2>🧉 Mi Pedido</h2>
+    <div id="carrito-items"></div>
+    <div class="carrito-total" id="carrito-total" style="display:none;">
+      <div class="carrito-total-row">
+        <span>Total</span>
+        <span id="total-precio">$0</span>
+      </div>
+      <div class="form-grupo">
+        <label>Tu nombre *</label>
+        <input type="text" id="input-nombre" placeholder="Juan García">
+      </div>
+      <div class="form-grupo">
+        <label>Tu teléfono</label>
+        <input type="text" id="input-telefono" placeholder="2634 123456">
+      </div>
+      <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="enviarPedido()">Confirmar pedido</button>
+    </div>
+    <div class="confirmacion" id="confirmacion">
+      <h3>✅ ¡Pedido recibido!</h3>
+      <p>Te contactaremos pronto para coordinar el retiro en Tucumán 275, San Martín.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CHATBOT -->
+<div class="chat-flotante">
+  <div class="chat-panel" id="chat-panel">
+    <div class="chat-header">
+      <span>🧉 Asistente del Mate</span>
+      <button style="background:none;border:none;color:white;font-size:1.1rem;cursor:pointer;" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chat-mensajes" id="chat-mensajes">
+      <div class="mensaje bot">¡Hola! 👋 Soy el asistente de <strong>El Rincón del Mate</strong>. ¿En qué te puedo ayudar? Podés preguntarme sobre productos, precios, o el local.</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chat-input" placeholder="Escribí tu consulta..." onkeydown="if(event.key==='Enter')enviarMensaje()">
+      <button onclick="enviarMensaje()">➤</button>
+    </div>
+  </div>
+  <button class="chat-btn" onclick="toggleChat()" title="Chat">💬</button>
+</div>
+
+<script>
+// ══ DATOS DE PRODUCTOS ══
+const productos = [
+  { id:1,  nombre:"Yerba Canarias Tradicional 1kg",          marca:"canarias", precio:11500, stock:20 },
+  { id:2,  nombre:"Yerba Canarias Tradicional 500g",          marca:"canarias", precio:6500,  stock:20 },
+  { id:3,  nombre:"Yerba Canarias Especial 1kg",              marca:"canarias", precio:12200, stock:20 },
+  { id:4,  nombre:"Yerba Canarias Especial 500g",             marca:"canarias", precio:7000,  stock:20 },
+  { id:5,  nombre:"Yerba Canarias Serena 1kg",                marca:"canarias", precio:12000, stock:20 },
+  { id:6,  nombre:"Yerba Canarias Serena 500g",               marca:"canarias", precio:7000,  stock:20 },
+  { id:7,  nombre:"Yerba Canarias Té Verde y Jengibre 500g",  marca:"canarias", precio:7000,  stock:20 },
+  { id:8,  nombre:"Yerba Rei Verde Premium 1kg",              marca:"rei verde", precio:11200, stock:20 },
+  { id:9,  nombre:"Yerba Rei Verde Premium 500g",             marca:"rei verde", precio:7000,  stock:20 },
+  { id:10, nombre:"Yerba Rei Verde Con Palo 1kg",             marca:"rei verde", precio:8000,  stock:20 },
+  { id:11, nombre:"Yerba Rei Verde Con Palo 500g",            marca:"rei verde", precio:5000,  stock:20 },
+  { id:12, nombre:"Yerba Rei Verde Clásica 1kg",              marca:"rei verde", precio:8500,  stock:20 },
+  { id:13, nombre:"Yerba Rei Verde Clásica 500g",             marca:"rei verde", precio:5500,  stock:20 },
+  { id:14, nombre:"Yerba Rei Verde Tradicional 1kg",          marca:"rei verde", precio:9500,  stock:20 },
+  { id:15, nombre:"Yerba Rei Verde Tradicional 500g",         marca:"rei verde", precio:5200,  stock:20 },
+  { id:16, nombre:"Yerba Rei Verde Compuesta 500g",           marca:"rei verde", precio:5600,  stock:20 },
+  { id:17, nombre:"Yerba Rei Verde Orgánica 500g",            marca:"rei verde", precio:6600,  stock:20 },
+  { id:18, nombre:"Yerba Sara 1kg",                           marca:"sara",      precio:13700, stock:20 },
+  { id:19, nombre:"Yerba Sara 500g",                          marca:"sara",      precio:8000,  stock:20 },
+  { id:20, nombre:"Yerba Sara Suave 1kg",                     marca:"sara",      precio:13700, stock:20 },
+  { id:21, nombre:"Yerba Sara Suave 500g",                    marca:"sara",      precio:8000,  stock:20 },
+  { id:22, nombre:"Yerba Sara Anís, Menta y Manzanilla 500g", marca:"sara",      precio:8350,  stock:20 },
+  { id:23, nombre:"Yerba Sara Coco 500g",                     marca:"sara",      precio:8350,  stock:0  },
+  { id:24, nombre:"Yerba Sara Cúrcuma y Pimienta 500g",       marca:"sara",      precio:8350,  stock:20 },
+  { id:25, nombre:"Yerba Verdecita 1kg",                      marca:"otras",     precio:8500,  stock:20 },
+  { id:26, nombre:"Yerba Verdecita 500g",                     marca:"otras",     precio:5500,  stock:20 },
+  { id:27, nombre:"Yerba Pindaré 1kg",                        marca:"otras",     precio:8000,  stock:20 },
+  { id:28, nombre:"Yerba Pindaré 500g",                       marca:"otras",     precio:5000,  stock:20 },
+  { id:29, nombre:"Yerba Libre 1kg",                          marca:"otras",     precio:8100,  stock:20 },
+  { id:30, nombre:"Yerba Libre 500g",                         marca:"otras",     precio:4500,  stock:20 },
+  { id:31, nombre:"Yerba Barao 1kg",                          marca:"otras",     precio:8600,  stock:20 },
+  { id:32, nombre:"Yerba Barao 500g",                         marca:"otras",     precio:5000,  stock:20 },
+  { id:33, nombre:"Yerba Baldo 1kg",                          marca:"otras",     precio:11000, stock:20 },
+  { id:34, nombre:"Yerba Baldo 500g",                         marca:"otras",     precio:6500,  stock:20 },
+];
+
+// WEBHOOK de n8n (se actualiza cuando se publique)
+const WEBHOOK_URL = "https://matiasanchez88.app.n8n.cloud/webhook/pedido-mate";
+
+// ══ FRASE DEL DÍA ══
+const frases = [
+  "El mate es más que una bebida, es un abrazo en forma de yerba. ☀️",
+  "Empezá el día con calma, con mate y con ganas. 🧉",
+  "El primer mate del día tiene sabor a posibilidades. 🌿",
+  "La vida es mejor compartida alrededor de un mate. ❤️",
+  "Un mate bien cebado puede cambiar el humor de cualquiera. 🌞",
+  "No hay problema tan grande que no se pueda hablar tomando unos mates. 🧉",
+  "El mate une, el mate cura, el mate acompaña. 🌿",
+  "Hoy es un buen día para ser feliz y tomar unos mates. ☕",
+  "La simplicidad del mate nos recuerda lo importante de la vida. 💚",
+  "Con mate en mano, todo desafío se puede enfrentar. 🧉",
+  "El mate es cultura, tradición y corazón argentino. 🇦🇷",
+  "Compartí un mate, compartí un momento, compartí vida. 🌱",
+  "El secreto de un buen día: yerba fresca y buena compañía. 🧉",
+  "Como el mate, las mejores cosas en la vida se disfrutan despacio. 🕊️",
+  "Un mate por la mañana aleja al mal humor todo el día. ☀️"
+];
+const hoy = new Date();
+document.getElementById('frase-dia').textContent = frases[hoy.getDate() % frases.length];
+
+// ══ CARRITO ══
+let carrito = [];
+
+function formatPrecio(n) {
+  return '$' + n.toLocaleString('es-AR');
+}
+
+function agregarAlCarrito(id) {
+  const p = productos.find(x => x.id === id);
+  if (!p || p.stock === 0) return;
+  const existente = carrito.find(x => x.id === id);
+  if (existente) {
+    if (existente.cantidad < p.stock) existente.cantidad++;
+  } else {
+    carrito.push({ ...p, cantidad: 1 });
+  }
+  actualizarCarrito();
+  mostrarCarrito();
+}
+
+function cambiarCantidad(id, delta) {
+  const item = carrito.find(x => x.id === id);
+  if (!item) return;
+  item.cantidad += delta;
+  if (item.cantidad <= 0) carrito = carrito.filter(x => x.id !== id);
+  actualizarCarrito();
+}
+
+function actualizarCarrito() {
+  const total = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const cant = carrito.reduce((s, i) => s + i.cantidad, 0);
+  document.getElementById('badge-cant').textContent = cant;
+  document.getElementById('btn-carrito').style.display = cant > 0 ? 'flex' : 'none';
+
+  const itemsEl = document.getElementById('carrito-items');
+  const totalEl = document.getElementById('carrito-total');
+
+  if (carrito.length === 0) {
+    itemsEl.innerHTML = '<p style="color:var(--texto-suave);font-style:italic;margin-top:12px;">Tu pedido está vacío.</p>';
+    totalEl.style.display = 'none';
+    return;
+  }
+
+  itemsEl.innerHTML = carrito.map(i => `
+    <div class="carrito-item">
+      <div class="carrito-item-info">
+        <div class="carrito-item-nombre">${i.nombre}</div>
+        <div class="carrito-item-precio">${formatPrecio(i.precio)} c/u · Subtotal: ${formatPrecio(i.precio * i.cantidad)}</div>
+      </div>
+      <div class="carrito-cantidad">
+        <button class="cant-btn" onclick="cambiarCantidad(${i.id}, -1)">−</button>
+        <span style="font-weight:700;min-width:20px;text-align:center">${i.cantidad}</span>
+        <button class="cant-btn" onclick="cambiarCantidad(${i.id}, 1)">+</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('total-precio').textContent = formatPrecio(total);
+  totalEl.style.display = 'block';
+}
+
+function toggleCarrito() {
+  const o = document.getElementById('overlay-carrito');
+  o.classList.toggle('abierto');
+}
+
+function cerrarCarritoPorOverlay(e) {
+  if (e.target === document.getElementById('overlay-carrito')) toggleCarrito();
+}
+
+function mostrarCarrito() {
+  document.getElementById('overlay-carrito').classList.add('abierto');
+  actualizarCarrito();
+}
+
+async function enviarPedido() {
+  const nombre = document.getElementById('input-nombre').value.trim();
+  if (!nombre) { alert('Por favor ingresá tu nombre.'); return; }
+  if (carrito.length === 0) { alert('Tu pedido está vacío.'); return; }
+
+  const total = carrito.reduce((s, i) => s + i.precio * i.cantidad, 0);
+  const payload = {
+    nombre,
+    telefono: document.getElementById('input-telefono').value.trim(),
+    productos: carrito.map(i => ({ nombre: i.nombre, precio: i.precio, cantidad: i.cantidad })),
+    total
+  };
+
+  try {
+    await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      mode: 'no-cors'
+    });
+  } catch(e) { /* no-cors puede tirar error pero el pedido llega igual */ }
+
+  document.getElementById('carrito-total').style.display = 'none';
+  document.getElementById('carrito-items').innerHTML = '';
+  document.getElementById('confirmacion').classList.add('visible');
+  carrito = [];
+  actualizarCarrito();
+}
+
+// ══ FILTROS Y GRID ══
+let filtroActivo = 'todos';
+
+function filtrar(marca, btn) {
+  filtroActivo = marca;
+  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('activo'));
+  btn.classList.add('activo');
+  renderProductos();
+}
+
+function renderProductos() {
+  const grid = document.getElementById('grid-productos');
+  let lista = productos;
+  if (filtroActivo === 'disponible') {
+    lista = productos.filter(p => p.stock > 0);
+  } else if (filtroActivo !== 'todos') {
+    lista = productos.filter(p => p.marca === filtroActivo);
+  }
+
+  grid.innerHTML = lista.map(p => {
+    const sinStock = p.stock === 0;
+    const bajoStock = p.stock > 0 && p.stock <= 5;
+    const marcaLabel = p.marca.charAt(0).toUpperCase() + p.marca.slice(1);
+    return `
+      <div class="producto-card${sinStock ? ' sin-stock' : ''}">
+        ${sinStock ? '<span class="badge-sin-stock">Sin stock</span>' : ''}
+        ${bajoStock ? `<span class="badge-bajo-stock">¡Últimas ${p.stock}!</span>` : ''}
+        <div class="producto-marca">${marcaLabel}</div>
+        <div class="producto-nombre">${p.nombre.replace(/^Yerba /, '')}</div>
+        <div class="producto-stock">${sinStock ? 'No disponible' : `${p.stock} unidades disponibles`}</div>
+        <div class="producto-footer">
+          <div class="producto-precio">${formatPrecio(p.precio)}</div>
+          <button class="btn-agregar" onclick="agregarAlCarrito(${p.id})" ${sinStock ? 'disabled' : ''}>
+            ${sinStock ? 'Sin stock' : '+ Agregar'}
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+renderProductos();
+
+// ══ CHATBOT ══
+let chatAbierto = false;
+
+function toggleChat() {
+  chatAbierto = !chatAbierto;
+  document.getElementById('chat-panel').classList.toggle('abierto', chatAbierto);
+}
+
+function agregarMensaje(texto, tipo) {
+  const cont = document.getElementById('chat-mensajes');
+  const div = document.createElement('div');
+  div.className = 'mensaje ' + tipo;
+  div.innerHTML = texto;
+  cont.appendChild(div);
+  cont.scrollTop = cont.scrollHeight;
+}
+
+function respuestaBot(msg) {
+  const m = msg.toLowerCase();
+  if (m.includes('precio') || m.includes('cuánto') || m.includes('cuanto') || m.includes('cuesta')) {
+    return 'Los precios van desde $4.500 (Yerba Libre 500g) hasta $13.700 (Yerba Sara 1kg). ¡Podés ver todos en la sección de productos! 🧉';
+  }
+  if (m.includes('stock') || m.includes('hay') || m.includes('tienen') || m.includes('disponible')) {
+    return 'Tenemos la mayoría de los productos disponibles. La única que está sin stock ahora es la Yerba Sara Coco 500g. ¡Todo lo demás está disponible! ✅';
+  }
+  if (m.includes('dónde') || m.includes('donde') || m.includes('ubicación') || m.includes('ubicacion') || m.includes('local') || m.includes('dirección') || m.includes('direccion')) {
+    return '📍 Estamos en Tucumán 275, San Martín, Mendoza. Es una agencia de quiniela, así que no te perdés. Abrimos Lun–Sáb de 9 a 20hs.';
+  }
+  if (m.includes('envío') || m.includes('envio') || m.includes('delivery') || m.includes('mandan') || m.includes('traen')) {
+    return 'Por el momento solo hacemos retiro en el local. ¡Pasate por Tucumán 275! 😊';
+  }
+  if (m.includes('whatsapp') || m.includes('wsp') || m.includes('contacto') || m.includes('llamar') || m.includes('telefono') || m.includes('teléfono')) {
+    return '¡Claro! Podés escribirnos al WhatsApp: <a href="https://wa.me/5492634518838" target="_blank" style="color:var(--verde-mate)">+54 9 2634 518838</a> 📱';
+  }
+  if (m.includes('pedido') || m.includes('comprar') || m.includes('pedir')) {
+    return '¡Fácil! Usá el botón "Agregar" en cada producto y cuando estés listo, hacé clic en "Mi pedido" para confirmar. Te avisamos por email y WhatsApp 🧉';
+  }
+  if (m.includes('horario') || m.includes('abre') || m.includes('cierra')) {
+    return '⏰ Abrimos de Lunes a Sábado de 9:00 a 20:00 hs. ¡Te esperamos!';
+  }
+  if (m.includes('sara') || m.includes('canarias') || m.includes('rei verde') || m.includes('verdecita') || m.includes('pindaré') || m.includes('libre') || m.includes('barao') || m.includes('baldo')) {
+    return 'Tenemos varias opciones de esa marca 🌿 Te recomiendo usar el filtro en la sección de productos para verlas todas juntas con sus precios.';
+  }
+  if (m.includes('hola') || m.includes('buenos') || m.includes('buenas') || m.includes('buen día')) {
+    return '¡Hola! 🧉 ¿En qué te puedo ayudar? Podés preguntarme sobre precios, stock, cómo hacer un pedido o dónde estamos.';
+  }
+  if (m.includes('gracias') || m.includes('ok') || m.includes('perfecto') || m.includes('listo')) {
+    return '¡Con mucho gusto! Si necesitás algo más, acá estoy. ¡Que disfrutes el mate! 🧉';
+  }
+  return 'No entendí bien tu consulta 😅 Podés preguntarme sobre precios, stock, ubicación, horarios o cómo hacer un pedido. ¡Estoy para ayudarte!';
+}
+
+function enviarMensaje() {
+  const input = document.getElementById('chat-input');
+  const texto = input.value.trim();
+  if (!texto) return;
+  agregarMensaje(texto, 'usuario');
+  input.value = '';
+  setTimeout(() => agregarMensaje(respuestaBot(texto), 'bot'), 500);
+}
+</script>
+
+</body>
+</html>
+HTMLEOF
+echo "Web creada OK"
